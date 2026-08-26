@@ -29,19 +29,26 @@ pitch the right contractors, developers and EPC firms.
 
 ## Seed data
 
-The dashboard ships with **109 real, individually-sourced projects** across 20
-states — government (NHAI, state PWD/road corporations), PSU (RVNL, NTPC/BHEL,
-POWERGRID, metro rail corporations), private (real estate, steel/cement/
-industrial capex, data centers, warehousing, healthcare) and PPP projects.
-Each was compiled from public announcements (company disclosures, exchange
-filings, NHAI/metro-rail-corporation press releases, trade press) as of
-August 2026, and every record carries a `sourceUrl` — click **View source** on
-a project's detail page to verify it before you pitch.
+The dashboard ships with **185 real, individually-sourced projects** across 23
+states — government (NHAI, state PWD/road corporations, NHIDCL), PSU (RVNL,
+NTPC/BHEL, POWERGRID, SAIL, metro rail corporations, NHSRCL), private (real
+estate, steel/cement/industrial capex, data centers, warehousing, healthcare)
+and PPP projects, including national flagship programs (Mumbai-Ahmedabad
+bullet train, Char Dham Pariyojana, Sagarmala/Vadhavan Port) and major dam/
+irrigation projects. Each was compiled from public announcements (company
+disclosures, exchange filings, NHAI/metro-rail-corporation press releases,
+trade press) as of August 2026, and every record carries a `sourceUrl` —
+click **View source** on a project's detail page to verify it before you
+pitch.
 
-This is **not a live feed and not exhaustive** — it's a snapshot from one
-research pass, not a comprehensive database of every Indian infrastructure
+This is **not a live feed and not exhaustive** — it's a snapshot from two
+research passes, not a comprehensive database of every Indian infrastructure
 project (no free public source offers that; commercial services like
 ProjectsToday or CMIE Capex exist precisely because compiling one is hard).
+Some well-known named projects genuinely have no active new-construction
+package to find (e.g. Sardar Sarovar Dam's main structure was completed in
+2017) — those won't appear unless a specific ongoing package (canal network,
+lift irrigation, etc.) turns up in search.
 Fields the source article didn't state (often project value, exact dates) are
 left `null` rather than guessed — the UI shows "Not disclosed" / "—" for
 those, never a fabricated number. Extend or refresh the dataset via the
