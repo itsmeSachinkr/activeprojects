@@ -1,4 +1,5 @@
 import type { Project } from './types';
+import { startYear } from './utils';
 
 export interface Filters {
   states: string[];
@@ -40,12 +41,12 @@ export function applyFilters(projects: Project[], filters: Filters): Project[] {
       const hay = `${p.name} ${p.contractor} ${p.client} ${p.city} ${p.state}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
-    const year = new Date(p.startDate).getFullYear();
-    if (filters.yearFrom !== null && year < filters.yearFrom) return false;
-    if (filters.yearTo !== null && year > filters.yearTo) return false;
-    if (filters.minDurationMonths !== null && p.durationMonths < filters.minDurationMonths) return false;
-    if (filters.maxDurationMonths !== null && p.durationMonths > filters.maxDurationMonths) return false;
-    if (filters.minValueCr !== null && p.projectValueCr < filters.minValueCr) return false;
+    const year = startYear(p);
+    if (filters.yearFrom !== null && (year === null || year < filters.yearFrom)) return false;
+    if (filters.yearTo !== null && (year === null || year > filters.yearTo)) return false;
+    if (filters.minDurationMonths !== null && (p.durationMonths === null || p.durationMonths < filters.minDurationMonths)) return false;
+    if (filters.maxDurationMonths !== null && (p.durationMonths === null || p.durationMonths > filters.maxDurationMonths)) return false;
+    if (filters.minValueCr !== null && (p.projectValueCr === null || p.projectValueCr < filters.minValueCr)) return false;
     return true;
   });
 }

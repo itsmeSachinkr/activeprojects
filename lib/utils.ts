@@ -1,6 +1,7 @@
 import type { Project } from './types';
 
-export function formatCr(value: number): string {
+export function formatCr(value: number | null): string {
+  if (value === null || value === undefined) return 'Not disclosed';
   return `₹${value.toLocaleString('en-IN')} Cr`;
 }
 
@@ -15,8 +16,14 @@ export function formatTonnes(value: number | null): string {
   return `${value.toLocaleString('en-IN')} MT`;
 }
 
-export function startYear(project: Project): number {
-  return new Date(project.startDate).getFullYear();
+export function startYear(project: Project): number | null {
+  if (!project.startDate) return null;
+  const y = new Date(project.startDate).getFullYear();
+  return isNaN(y) ? null : y;
+}
+
+export function formatDuration(months: number | null): string {
+  return months === null || months === undefined ? '—' : `${months} mo`;
 }
 
 export function uniqueSorted(values: string[]): string[] {
@@ -24,7 +31,11 @@ export function uniqueSorted(values: string[]): string[] {
 }
 
 export function totalValueCr(projects: Project[]): number {
-  return projects.reduce((sum, p) => sum + p.projectValueCr, 0);
+  return projects.reduce((sum, p) => sum + (p.projectValueCr ?? 0), 0);
+}
+
+export function countWithDisclosedValue(projects: Project[]): number {
+  return projects.filter((p) => p.projectValueCr !== null).length;
 }
 
 export function totalSteelTonnes(projects: Project[]): number {
@@ -64,7 +75,7 @@ export function summarizeContractors(projects: Project[]): ContractorSummary[] {
     }
     const entry = map.get(key)!;
     entry.projectCount += 1;
-    entry.totalValueCr += p.projectValueCr;
+    entry.totalValueCr += p.projectValueCr ?? 0;
     entry.totalSteelTonnes += p.steelRequirementTonnes ?? 0;
     entry.totalCementTonnes += p.cementRequirementTonnes ?? 0;
     if (!entry.states.includes(p.state)) entry.states.push(p.state);

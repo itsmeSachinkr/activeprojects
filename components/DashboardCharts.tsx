@@ -14,6 +14,7 @@ import {
   Legend,
 } from 'recharts';
 import type { Project } from '@/lib/types';
+import { startYear } from '@/lib/utils';
 
 const SEQUENTIAL_BLUE = '#2a78d6';
 const CATEGORICAL = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#4a3aa7', '#e34948'];
@@ -115,9 +116,10 @@ export function OwnerPieChart({ projects }: { projects: Project[] }) {
 
 export function TopContractorsChart({ projects }: { projects: Project[] }) {
   const values = new Map<string, number>();
-  for (const p of projects) values.set(p.contractor, (values.get(p.contractor) ?? 0) + p.projectValueCr);
+  for (const p of projects) values.set(p.contractor, (values.get(p.contractor) ?? 0) + (p.projectValueCr ?? 0));
   const data = Array.from(values.entries())
     .map(([contractor, value]) => ({ contractor, value }))
+    .filter((row) => row.value > 0)
     .sort((a, b) => b.value - a.value)
     .slice(0, 8);
 
@@ -138,13 +140,16 @@ export function TopContractorsChart({ projects }: { projects: Project[] }) {
 
 export function TimelineChart({ projects }: { projects: Project[] }) {
   const counts = new Map<number, number>();
+  let unknown = 0;
   for (const p of projects) {
-    const year = new Date(p.startDate).getFullYear();
+    const year = startYear(p);
+    if (year === null) { unknown += 1; continue; }
     counts.set(year, (counts.get(year) ?? 0) + 1);
   }
   const data = Array.from(counts.entries())
     .map(([year, count]) => ({ year: String(year), count }))
     .sort((a, b) => a.year.localeCompare(b.year));
+  if (unknown > 0) data.push({ year: 'Unknown', count: unknown });
 
   return (
     <ChartCard title="Projects Starting by Year">

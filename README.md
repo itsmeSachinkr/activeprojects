@@ -27,20 +27,31 @@ pitch the right contractors, developers and EPC firms.
   verified project data, and upload it. Matching IDs update existing projects;
   new rows are appended.
 
-## Sample data
+## Seed data
 
-The dashboard ships with **42 illustrative sample projects** across ~18
-states, covering government (NHAI/state PWD/municipal), PSU (RVNL, IRCON,
-Cochin Shipyard), private (real estate, industrial, data centers, warehousing,
-healthcare) and PPP projects. These are demo data to show the workflow — not
-scraped or verified real-time tender data. Replace/extend them via the
-**Import Data** page with your own research from sources like:
+The dashboard ships with **109 real, individually-sourced projects** across 20
+states — government (NHAI, state PWD/road corporations), PSU (RVNL, NTPC/BHEL,
+POWERGRID, metro rail corporations), private (real estate, steel/cement/
+industrial capex, data centers, warehousing, healthcare) and PPP projects.
+Each was compiled from public announcements (company disclosures, exchange
+filings, NHAI/metro-rail-corporation press releases, trade press) as of
+August 2026, and every record carries a `sourceUrl` — click **View source** on
+a project's detail page to verify it before you pitch.
+
+This is **not a live feed and not exhaustive** — it's a snapshot from one
+research pass, not a comprehensive database of every Indian infrastructure
+project (no free public source offers that; commercial services like
+ProjectsToday or CMIE Capex exist precisely because compiling one is hard).
+Fields the source article didn't state (often project value, exact dates) are
+left `null` rather than guessed — the UI shows "Not disclosed" / "—" for
+those, never a fabricated number. Extend or refresh the dataset via the
+**Import Data** page using your own research from sources like:
 
 - GeM (Government e-Marketplace) and state PWD/CPWD tender portals
 - NIC's Project Monitoring Group (PMG) dashboard
 - NHAI, state road development corporations, metro rail corporations
 - RERA filings for private real estate projects
-- Company investor presentations / annual reports for private capex plans
+- Company investor presentations / annual reports / exchange filings for capex plans
 
 ## Data model
 
@@ -48,7 +59,9 @@ Each project record (`data/projects.json`) includes: name, description,
 sector, owner type, state/city, contractor, client, project value (₹ Cr),
 estimated steel & cement requirement (tonnes), start/end date, duration,
 status, funding source, tender date, contact info, source URL, your pitch
-status, and notes. See `lib/types.ts` for the full schema.
+status, and notes. See `lib/types.ts` for the full schema. `projectValueCr`,
+`startDate`, `endDate`, and `durationMonths` are nullable — real source
+articles don't always disclose every field.
 
 ## Running locally
 

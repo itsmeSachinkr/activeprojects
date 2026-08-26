@@ -44,12 +44,12 @@ export interface Project {
   city: string;
   contractor: string;
   client: string;
-  projectValueCr: number;
+  projectValueCr: number | null;
   steelRequirementTonnes: number | null;
   cementRequirementTonnes: number | null;
-  startDate: string;
-  endDate: string;
-  durationMonths: number;
+  startDate: string | null;
+  endDate: string | null;
+  durationMonths: number | null;
   status: ProjectStatus;
   fundingSource: FundingSource;
   tenderDate: string | null;

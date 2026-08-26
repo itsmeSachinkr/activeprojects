@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import type { Project } from '@/lib/types';
-import { formatCr, formatDate } from '@/lib/utils';
+import { formatCr, formatDate, formatDuration } from '@/lib/utils';
 import { StatusBadge, OwnerBadge, PitchBadge } from './Badge';
 import { ArrowUpDown } from 'lucide-react';
 
@@ -20,9 +20,18 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
       if (sortKey === 'name' || sortKey === 'state' || sortKey === 'status') {
         cmp = a[sortKey].localeCompare(b[sortKey]);
       } else if (sortKey === 'startDate') {
-        cmp = a.startDate.localeCompare(b.startDate);
+        // Nulls sort last regardless of direction.
+        if (a.startDate === null && b.startDate === null) cmp = 0;
+        else if (a.startDate === null) return 1;
+        else if (b.startDate === null) return -1;
+        else cmp = a.startDate.localeCompare(b.startDate);
       } else {
-        cmp = a[sortKey] - b[sortKey];
+        const av = a[sortKey];
+        const bv = b[sortKey];
+        if (av === null && bv === null) cmp = 0;
+        else if (av === null) return 1;
+        else if (bv === null) return -1;
+        else cmp = av - bv;
       }
       return sortDir === 'asc' ? cmp : -cmp;
     });
@@ -93,7 +102,7 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
                 <StatusBadge status={p.status} />
               </td>
               <td className="whitespace-nowrap px-4 py-3 font-medium text-ink-800">{formatCr(p.projectValueCr)}</td>
-              <td className="whitespace-nowrap px-4 py-3 text-ink-600">{p.durationMonths} mo</td>
+              <td className="whitespace-nowrap px-4 py-3 text-ink-600">{formatDuration(p.durationMonths)}</td>
               <td className="whitespace-nowrap px-4 py-3 text-ink-600">{formatDate(p.startDate)}</td>
               <td className="whitespace-nowrap px-4 py-3">
                 <OwnerBadge ownerType={p.ownerType} />

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useProjects } from '@/lib/useProjects';
 import { EMPTY_FILTERS, applyFilters } from '@/lib/filters';
 import type { Filters } from '@/lib/filters';
-import { uniqueSorted, totalValueCr, totalSteelTonnes, totalCementTonnes, formatCr, formatTonnes } from '@/lib/utils';
+import { uniqueSorted, totalValueCr, totalSteelTonnes, totalCementTonnes, formatCr, formatTonnes, countWithDisclosedValue } from '@/lib/utils';
 import { SECTORS, STATUSES, OWNER_TYPES } from '@/lib/types';
 import FilterBar from '@/components/FilterBar';
 import StatCard from '@/components/StatCard';
@@ -47,7 +47,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-800">
-        This dashboard ships with 42 illustrative sample projects to demo the workflow. Add your real, verified project pipeline anytime via{' '}
+        Data compiled from public sources (NHAI, metro rail corporations, port/power authorities, company disclosures, news) as of Aug 2026 — not every field is disclosed for every project, and figures can move. Check the source link on each project before pitching. Add your own verified pipeline anytime via{' '}
         <Link href="/import" className="font-semibold underline">
           Import Data
         </Link>
@@ -65,7 +65,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
         <StatCard icon={Layers} label="Projects" value={String(filtered.length)} sub={`of ${projects.length} total`} />
-        <StatCard icon={IndianRupee} label="Total Value" value={formatCr(totalValueCr(filtered))} sub="Combined project value" />
+        <StatCard icon={IndianRupee} label="Total Value" value={formatCr(totalValueCr(filtered))} sub={`${countWithDisclosedValue(filtered)} of ${filtered.length} disclose a value`} />
         <StatCard icon={Weight} label="Est. Steel Demand" value={formatTonnes(totalSteelTonnes(filtered))} sub="TMT/MS opportunity" />
         <StatCard icon={Weight} label="Est. Cement Demand" value={formatTonnes(totalCementTonnes(filtered))} sub="Cement opportunity" />
         <StatCard icon={Building2} label="Contractors" value={String(contractorCount)} sub="Unique EPCs / developers" />
@@ -90,7 +90,8 @@ export default function DashboardPage() {
         </div>
         <div className="divide-y divide-ink-100">
           {[...filtered]
-            .sort((a, b) => b.projectValueCr - a.projectValueCr)
+            .filter((p) => p.projectValueCr !== null)
+            .sort((a, b) => (b.projectValueCr as number) - (a.projectValueCr as number))
             .slice(0, 5)
             .map((p) => (
               <Link key={p.id} href={`/projects/${p.id}`} className="flex items-center justify-between gap-3 py-2.5 hover:bg-brand-50/40">

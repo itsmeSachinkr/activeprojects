@@ -5,9 +5,9 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import type { Project } from '@/lib/types';
 import { PITCH_STATUSES } from '@/lib/types';
-import { formatCr, formatDate, formatTonnes } from '@/lib/utils';
+import { formatCr, formatDate, formatTonnes, formatDuration } from '@/lib/utils';
 import { StatusBadge, OwnerBadge, PitchBadge } from '@/components/Badge';
-import { ArrowLeft, Building2, Calendar, MapPin, Landmark, Save, Trash2 } from 'lucide-react';
+import { ArrowLeft, Building2, Calendar, MapPin, Landmark, Save, Trash2, ExternalLink } from 'lucide-react';
 
 export default function ProjectDetailPage() {
   const params = useParams<{ id: string }>();
@@ -83,7 +83,7 @@ export default function ProjectDetailPage() {
             </div>
             <h1 className="text-xl font-bold text-ink-900">{project.name}</h1>
             <p className="mt-1 flex items-center gap-1 text-sm text-ink-500">
-              <MapPin size={13} /> {project.city}, {project.state}
+              <MapPin size={13} /> {project.city ? `${project.city}, ` : ''}{project.state}
             </p>
           </div>
           <p className="text-2xl font-bold text-brand-700">{formatCr(project.projectValueCr)}</p>
@@ -91,10 +91,21 @@ export default function ProjectDetailPage() {
 
         <p className="mt-4 text-sm leading-relaxed text-ink-700">{project.description}</p>
 
+        {project.sourceUrl && (
+          <a
+            href={project.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-brand-700 hover:underline"
+          >
+            <ExternalLink size={12} /> View source
+          </a>
+        )}
+
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Info icon={Building2} label="Contractor / EPC" value={project.contractor} />
           <Info icon={Landmark} label="Client / Authority" value={project.client} />
-          <Info icon={Calendar} label="Timeline" value={`${formatDate(project.startDate)} → ${formatDate(project.endDate)}`} sub={`${project.durationMonths} months`} />
+          <Info icon={Calendar} label="Timeline" value={`${formatDate(project.startDate)} → ${formatDate(project.endDate)}`} sub={`${formatDuration(project.durationMonths)}${project.durationMonths ? ' duration' : ''}`} />
           <Info icon={Building2} label="Funding Source" value={project.fundingSource} />
           <Info icon={Calendar} label="Tender Date" value={formatDate(project.tenderDate)} />
           <Info icon={Calendar} label="Last Updated" value={formatDate(project.lastUpdated)} />
@@ -111,7 +122,7 @@ export default function ProjectDetailPage() {
           </div>
         </div>
         <p className="mt-2 text-[11px] text-ink-400">
-          Material estimates are illustrative planning figures — verify with the contractor / EPC before quoting.
+          Material requirements aren&apos;t disclosed in public sources for most projects — estimate from project scope and confirm with the contractor before quoting.
         </p>
       </div>
 
