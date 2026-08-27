@@ -23,9 +23,15 @@ pitch the right contractors, developers and EPC firms.
 - **Contractors (`/contractors`)** — Every contractor/EPC/developer, ranked by
   total project value, with project count, active project count, states
   covered, and combined material demand. Click through to see their projects.
-- **Import Data (`/import`)** — Download a CSV template, fill it with your own
-  verified project data, and upload it. Matching IDs update existing projects;
-  new rows are appended.
+- **Import Data (`/import`)** — Upload a CSV or Excel (.xlsx/.xls) export from
+  any source in its own native column layout — e.g. a **ProjectsToday** export,
+  a GeM/state e-procurement download, or your own tracker — and map its
+  columns to InfraPulse's fields (auto-guessed, editable). Common variants
+  ("L1 Declared" → Awarded, "In Progress" → Under Construction, "Govt" →
+  Government) are normalized automatically; unrecognized values still import
+  as plain text rather than being dropped. Rows matching an existing project
+  id are updated instead of duplicated. A ready-made CSV template is also
+  available for manual entry.
 
 ## Seed data
 
