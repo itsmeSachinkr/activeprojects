@@ -35,17 +35,22 @@ pitch the right contractors, developers and EPC firms.
 
 ## Seed data
 
-The dashboard ships with **185 real, individually-sourced projects** across 23
-states — government (NHAI, state PWD/road corporations, NHIDCL), PSU (RVNL,
-NTPC/BHEL, POWERGRID, SAIL, metro rail corporations, NHSRCL), private (real
-estate, steel/cement/industrial capex, data centers, warehousing, healthcare)
-and PPP projects, including national flagship programs (Mumbai-Ahmedabad
-bullet train, Char Dham Pariyojana, Sagarmala/Vadhavan Port) and major dam/
-irrigation projects. Each was compiled from public announcements (company
-disclosures, exchange filings, NHAI/metro-rail-corporation press releases,
-trade press) as of August 2026, and every record carries a `sourceUrl` —
-click **View source** on a project's detail page to verify it before you
-pitch.
+The dashboard ships with **248 real, individually-sourced projects** across 25
+states and **186 unique contractors** — ranging from large national EPC firms
+to small/regional builders (e.g. K.C.V.R Infra Projects, Ramraja Construction,
+Brahmaputra Infrastructure, EMS Limited) that are often better sales leads
+than the big names since they have less negotiating leverage with material
+suppliers. Coverage spans government (NHAI, state PWD/road corporations,
+NHIDCL), PSU (RVNL, NTPC/BHEL, POWERGRID, SAIL, metro rail corporations,
+NHSRCL), private (real estate — including tier-2/3 city developers —
+steel/cement/industrial capex, renewable energy EPC, data centers,
+warehousing, healthcare, education) and PPP projects, including national
+flagship programs (Mumbai-Ahmedabad bullet train, Char Dham Pariyojana,
+Sagarmala/Vadhavan Port) and major dam/irrigation projects. Each was
+compiled from public announcements (company disclosures, exchange filings,
+NHAI/metro-rail-corporation press releases, trade press) as of August 2026,
+and every record carries a `sourceUrl` — click **View source** on a
+project's detail page to verify it before you pitch.
 
 This is **not a live feed and not exhaustive** — it's a snapshot from two
 research passes, not a comprehensive database of every Indian infrastructure
