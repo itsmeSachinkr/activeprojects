@@ -35,27 +35,31 @@ pitch the right contractors, developers and EPC firms.
 
 ## Seed data
 
-The dashboard ships with **248 real, individually-sourced projects** across 25
-states and **186 unique contractors** — ranging from large national EPC firms
-to small/regional builders (e.g. K.C.V.R Infra Projects, Ramraja Construction,
-Brahmaputra Infrastructure, EMS Limited) that are often better sales leads
+The dashboard ships with **316 real, individually-sourced projects** across 29
+states/UTs and **216 unique contractors** — ranging from large national EPC
+firms to small/regional builders (e.g. K.C.V.R Infra Projects, Ramraja
+Construction, Brahmaputra Infrastructure, EMS Limited, Dineshchandra R
+Agrawal Infracon, Hardayal Constructions) that are often better sales leads
 than the big names since they have less negotiating leverage with material
 suppliers. Coverage spans government (NHAI, state PWD/road corporations,
-NHIDCL), PSU (RVNL, NTPC/BHEL, POWERGRID, SAIL, metro rail corporations,
-NHSRCL), private (real estate — including tier-2/3 city developers —
-steel/cement/industrial capex, renewable energy EPC, data centers,
-warehousing, healthcare, education) and PPP projects, including national
-flagship programs (Mumbai-Ahmedabad bullet train, Char Dham Pariyojana,
-Sagarmala/Vadhavan Port) and major dam/irrigation projects. Each was
-compiled from public announcements (company disclosures, exchange filings,
-NHAI/metro-rail-corporation press releases, trade press) as of August 2026,
-and every record carries a `sourceUrl` — click **View source** on a
-project's detail page to verify it before you pitch.
+NHIDCL, PIB-announced projects across the Northeast and J&K/Ladakh), PSU
+(RVNL, NTPC/BHEL, POWERGRID, SAIL, metro rail corporations, NHSRCL,
+state industrial corporations like MIDC/GIDC/TSIIC/RIICO/KIADB), private
+(real estate — including tier-2/3 city developers and RERA-filed projects —
+steel/cement/pharma/chemicals/auto industrial capex, renewable energy EPC,
+data centers, warehousing/MMLPs, healthcare, education) and PPP projects,
+including national flagship programs (Mumbai-Ahmedabad bullet train, Char
+Dham Pariyojana, Sagarmala/Vadhavan Port) and major dam/irrigation projects.
+Each was compiled from public announcements (company disclosures, exchange
+filings, NHAI/metro-rail-corporation press releases, PIB releases, trade
+press) as of August 2026, and every record carries a `sourceUrl` — click
+**View source** on a project's detail page to verify it before you pitch.
 
-This is **not a live feed and not exhaustive** — it's a snapshot from two
-research passes, not a comprehensive database of every Indian infrastructure
-project (no free public source offers that; commercial services like
-ProjectsToday or CMIE Capex exist precisely because compiling one is hard).
+This is **not a live feed and not exhaustive** — it's a snapshot from
+several research passes, not a comprehensive database of every Indian
+infrastructure project (no free public source offers that; commercial
+services like ProjectsToday or CMIE Capex exist precisely because compiling
+one is hard — see note below on how those services actually work).
 Some well-known named projects genuinely have no active new-construction
 package to find (e.g. Sardar Sarovar Dam's main structure was completed in
 2017) — those won't appear unless a specific ongoing package (canal network,
@@ -68,8 +72,21 @@ those, never a fabricated number. Extend or refresh the dataset via the
 - GeM (Government e-Marketplace) and state PWD/CPWD tender portals
 - NIC's Project Monitoring Group (PMG) dashboard
 - NHAI, state road development corporations, metro rail corporations
+- State industrial development corporations (MIDC, GIDC, TSIIC, RIICO, KIADB, UPSIDC, HSIIDC) for industrial park/MMLP contracts
+- PIB (Press Information Bureau) releases for cabinet-approved and ministry-announced projects
 - RERA filings for private real estate projects
 - Company investor presentations / annual reports / exchange filings for capex plans
+
+**About ProjectsToday and similar paid data providers**: ProjectsToday is a
+commercial, subscription-only project-intelligence database (live since
+~2000), separate from and not scraped by this tool. It's not a public API or
+open dataset — it's built by a dedicated in-house research team that
+monitors tenders, filings, and press, and by their own public materials
+tracks roughly 45,000+ projects across 400+ industry groups. That's real
+scale, built over two decades — but it's a paid product behind a login, not
+something this dashboard can pull from automatically. If you have a
+subscription, use the **Import Data** page to bring your export in (column
+mapping is automatic for common layouts).
 
 ## Data model
 
