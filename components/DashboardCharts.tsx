@@ -116,7 +116,10 @@ export function OwnerPieChart({ projects }: { projects: Project[] }) {
 
 export function TopContractorsChart({ projects }: { projects: Project[] }) {
   const values = new Map<string, number>();
-  for (const p of projects) values.set(p.contractor, (values.get(p.contractor) ?? 0) + (p.projectValueCr ?? 0));
+  for (const p of projects) {
+    if (!p.contractor) continue;
+    values.set(p.contractor, (values.get(p.contractor) ?? 0) + (p.projectValueCr ?? 0));
+  }
   const data = Array.from(values.entries())
     .map(([contractor, value]) => ({ contractor, value }))
     .filter((row) => row.value > 0)

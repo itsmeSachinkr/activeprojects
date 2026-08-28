@@ -107,8 +107,8 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
               <td className="whitespace-nowrap px-4 py-3">
                 <OwnerBadge ownerType={p.ownerType} />
               </td>
-              <td className="max-w-[10rem] truncate px-4 py-3 text-ink-600" title={p.contractor}>
-                {p.contractor}
+              <td className="max-w-[10rem] truncate px-4 py-3 text-ink-600" title={p.contractor ?? 'Not yet awarded'}>
+                {p.contractor ?? <span className="text-ink-400">Not yet awarded</span>}
               </td>
               <td className="whitespace-nowrap px-4 py-3">
                 <PitchBadge pitchStatus={p.pitchStatus} />

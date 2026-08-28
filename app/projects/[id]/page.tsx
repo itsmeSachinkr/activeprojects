@@ -103,7 +103,7 @@ export default function ProjectDetailPage() {
         )}
 
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <Info icon={Building2} label="Contractor / EPC" value={project.contractor} />
+          <Info icon={Building2} label="Contractor / EPC" value={project.contractor ?? 'Not yet awarded'} />
           <Info icon={Landmark} label="Client / Authority" value={project.client} />
           <Info icon={Calendar} label="Timeline" value={`${formatDate(project.startDate)} → ${formatDate(project.endDate)}`} sub={`${formatDuration(project.durationMonths)}${project.durationMonths ? ' duration' : ''}`} />
           <Info icon={Building2} label="Funding Source" value={project.fundingSource} />

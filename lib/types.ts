@@ -42,7 +42,7 @@ export interface Project {
   ownerType: OwnerType;
   state: string;
   city: string;
-  contractor: string;
+  contractor: string | null;
   client: string;
   projectValueCr: number | null;
   steelRequirementTonnes: number | null;

@@ -60,6 +60,7 @@ export interface ContractorSummary {
 export function summarizeContractors(projects: Project[]): ContractorSummary[] {
   const map = new Map<string, ContractorSummary>();
   for (const p of projects) {
+    if (!p.contractor) continue;
     const key = p.contractor;
     if (!map.has(key)) {
       map.set(key, {

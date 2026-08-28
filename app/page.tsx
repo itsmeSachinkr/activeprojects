@@ -27,7 +27,7 @@ export default function DashboardPage() {
     return <p className="p-8 text-center text-sm text-ink-500">Loading dashboard…</p>;
   }
 
-  const contractorCount = new Set(filtered.map((p) => p.contractor)).size;
+  const contractorCount = new Set(filtered.map((p) => p.contractor).filter((c): c is string => Boolean(c))).size;
 
   return (
     <div className="space-y-5">
@@ -98,7 +98,7 @@ export default function DashboardPage() {
                 <div>
                   <p className="text-sm font-medium text-ink-900">{p.name}</p>
                   <p className="flex items-center gap-1 text-xs text-ink-500">
-                    <MapPin size={11} /> {p.city}, {p.state} · {p.contractor}
+                    <MapPin size={11} /> {p.city}, {p.state} · {p.contractor ?? 'Not yet awarded'}
                   </p>
                 </div>
                 <p className="whitespace-nowrap text-sm font-semibold text-ink-800">{formatCr(p.projectValueCr)}</p>
