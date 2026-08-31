@@ -79,14 +79,25 @@ export default function ProjectDetailPage() {
             <div className="mb-2 flex flex-wrap items-center gap-2">
               <StatusBadge status={project.status} />
               <OwnerBadge ownerType={project.ownerType} />
-              <span className="text-xs text-ink-500">{project.sector}</span>
+              <span className="text-xs text-ink-500">{project.sector} · {project.subSector}</span>
             </div>
             <h1 className="text-xl font-bold text-ink-900">{project.name}</h1>
             <p className="mt-1 flex items-center gap-1 text-sm text-ink-500">
               <MapPin size={13} /> {project.city ? `${project.city}, ` : ''}{project.state}
             </p>
           </div>
-          <p className="text-2xl font-bold text-brand-700">{formatCr(project.projectValueCr)}</p>
+          <div className="text-right">
+            <p className="text-2xl font-bold text-brand-700">{formatCr(project.projectValueCr)}</p>
+            <div
+              className="mt-1.5 flex items-center justify-end gap-2"
+              title={project.completionBasis === 'disclosed' ? 'Disclosed by source' : project.completionBasis === 'calculated' ? 'Estimated from disclosed start/end dates' : 'Estimated from project status'}
+            >
+              <span className="text-xs text-ink-500">{project.completionPercent}% complete</span>
+              <div className="h-1.5 w-20 overflow-hidden rounded-full bg-ink-100">
+                <div className="h-full rounded-full bg-brand-500" style={{ width: `${project.completionPercent}%` }} />
+              </div>
+            </div>
+          </div>
         </div>
 
         <p className="mt-4 text-sm leading-relaxed text-ink-700">{project.description}</p>

@@ -10,7 +10,8 @@ export interface SchemaFieldDef {
 export const SCHEMA_FIELDS: SchemaFieldDef[] = [
   { key: 'name', label: 'Project Name', required: true, synonyms: ['project name', 'name', 'title', 'project'] },
   { key: 'description', label: 'Description', required: false, synonyms: ['description', 'scope', 'details', 'remarks'] },
-  { key: 'sector', label: 'Sector', required: false, synonyms: ['sector', 'industry', 'category', 'segment'] },
+  { key: 'sector', label: 'Sector / Segment', required: false, synonyms: ['sector', 'industry', 'category', 'segment'] },
+  { key: 'subSector', label: 'Sub-Sector / Sub-Segment', required: false, synonyms: ['sub-sector', 'sub sector', 'sub-segment', 'sub segment', 'industry group', 'sub-industry'] },
   { key: 'ownerType', label: 'Owner Type', required: false, synonyms: ['owner type', 'ownership', 'client type', 'sector type'] },
   { key: 'state', label: 'State', required: true, synonyms: ['state'] },
   { key: 'city', label: 'City / District', required: false, synonyms: ['city', 'district', 'location', 'place', 'town'] },
@@ -18,6 +19,7 @@ export const SCHEMA_FIELDS: SchemaFieldDef[] = [
   { key: 'client', label: 'Client / Authority', required: false, synonyms: ['client', 'authority', 'owner', 'employer', 'department'] },
   { key: 'projectValueCr', label: 'Project Value (₹ Cr)', required: false, synonyms: ['value', 'cost', 'amount', 'project cost', 'contract value', 'crore', 'tender value'] },
   { key: 'status', label: 'Status', required: false, synonyms: ['status', 'stage', 'project status'] },
+  { key: 'completionPercent', label: 'Completion %', required: false, synonyms: ['completion', 'completion %', 'progress', '% complete', 'physical progress'] },
   { key: 'fundingSource', label: 'Funding Source', required: false, synonyms: ['funding', 'finance', 'funding source'] },
   { key: 'startDate', label: 'Start Date', required: false, synonyms: ['start date', 'commencement', 'commencement date'] },
   { key: 'endDate', label: 'End Date', required: false, synonyms: ['end date', 'completion date', 'scheduled completion', 'completion'] },
@@ -108,12 +110,14 @@ export function applyMapping(
 
     const valueStr = get('projectValueCr').replace(/[^0-9.]/g, '');
     const durationStr = get('durationMonths').replace(/[^0-9.]/g, '');
+    const completionStr = get('completionPercent').replace(/[^0-9.]/g, '');
 
     return {
       data: {
         name: get('name'),
         description: get('description'),
         sector: normSector || undefined,
+        subSector: get('subSector') || undefined,
         ownerType: normOwner || undefined,
         state: get('state'),
         city: get('city'),
@@ -124,6 +128,8 @@ export function applyMapping(
         endDate: get('endDate') || null,
         durationMonths: durationStr ? Number(durationStr) : null,
         status: normStatus || undefined,
+        completionPercent: completionStr ? Number(completionStr) : undefined,
+        completionBasis: completionStr ? 'disclosed' : undefined,
         fundingSource: normFunding || undefined,
         tenderDate: get('tenderDate') || null,
         contactPerson: get('contactPerson') || null,

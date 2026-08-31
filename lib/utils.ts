@@ -90,9 +90,9 @@ export function summarizeContractors(projects: Project[]): ContractorSummary[] {
 
 export function projectsToCsv(projects: Project[]): string {
   const headers = [
-    'id', 'name', 'sector', 'ownerType', 'state', 'city', 'contractor', 'client',
+    'id', 'name', 'sector', 'subSector', 'ownerType', 'state', 'city', 'contractor', 'client',
     'projectValueCr', 'steelRequirementTonnes', 'cementRequirementTonnes',
-    'startDate', 'endDate', 'durationMonths', 'status', 'fundingSource',
+    'startDate', 'endDate', 'durationMonths', 'status', 'completionPercent', 'completionBasis', 'fundingSource',
     'tenderDate', 'pitchStatus', 'notes',
   ];
   const escape = (val: unknown) => {

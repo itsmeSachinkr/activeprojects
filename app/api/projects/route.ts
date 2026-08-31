@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readProjects, writeProjects, nextProjectId } from '@/lib/data';
-import type { Project } from '@/lib/types';
+import type { Project, ProjectStatus } from '@/lib/types';
 
 export async function GET() {
   const projects = readProjects();
   return NextResponse.json(projects);
 }
+
+// Rough completion estimate for imported rows that don't specify one, by status band.
+const STATUS_COMPLETION_BAND: Record<ProjectStatus, number> = {
+  Tendering: 0,
+  Awarded: 5,
+  'Under Construction': 45,
+  Delayed: 55,
+  'Nearing Completion': 85,
+  Completed: 100,
+};
 
 // Bulk import: accepts an array of partial project records (e.g. from CSV import).
 // Records with a matching id are updated in place; records without one are appended
@@ -35,6 +45,7 @@ export async function POST(req: NextRequest) {
         name: record.name ?? 'Untitled Project',
         description: record.description ?? '',
         sector: record.sector ?? 'Roads & Highways',
+        subSector: record.subSector ?? 'General',
         ownerType: record.ownerType ?? 'Government',
         state: record.state ?? '',
         city: record.city ?? '',
@@ -47,6 +58,10 @@ export async function POST(req: NextRequest) {
         endDate: record.endDate ?? null,
         durationMonths: record.durationMonths != null && record.durationMonths !== ('' as unknown) ? Number(record.durationMonths) : null,
         status: record.status ?? 'Tendering',
+        completionPercent: record.completionPercent != null && record.completionPercent !== ('' as unknown)
+          ? Number(record.completionPercent)
+          : STATUS_COMPLETION_BAND[record.status ?? 'Tendering'],
+        completionBasis: record.completionBasis ?? 'status',
         fundingSource: record.fundingSource ?? 'State',
         tenderDate: record.tenderDate ?? null,
         contactPerson: record.contactPerson ?? null,

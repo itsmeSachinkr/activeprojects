@@ -32,6 +32,7 @@ function ProjectsPageInner() {
   }, [searchParams]);
 
   const stateOptions = useMemo(() => uniqueSorted((projects ?? []).map((p) => p.state)), [projects]);
+  const subSectorOptions = useMemo(() => uniqueSorted((projects ?? []).map((p) => p.subSector)), [projects]);
   const filtered = useMemo(() => applyFilters(projects ?? [], filters), [projects, filters]);
 
   function exportCsv() {
@@ -89,6 +90,7 @@ function ProjectsPageInner() {
         setFilters={setFilters}
         stateOptions={stateOptions}
         sectorOptions={SECTORS}
+        subSectorOptions={subSectorOptions}
         ownerOptions={OWNER_TYPES}
         statusOptions={STATUSES}
       />

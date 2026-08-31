@@ -7,7 +7,7 @@ import { formatCr, formatDate, formatDuration } from '@/lib/utils';
 import { StatusBadge, OwnerBadge, PitchBadge } from './Badge';
 import { ArrowUpDown } from 'lucide-react';
 
-type SortKey = 'name' | 'state' | 'projectValueCr' | 'durationMonths' | 'startDate' | 'status';
+type SortKey = 'name' | 'state' | 'projectValueCr' | 'durationMonths' | 'startDate' | 'status' | 'completionPercent';
 
 export default function ProjectTable({ projects }: { projects: Project[] }) {
   const [sortKey, setSortKey] = useState<SortKey>('startDate');
@@ -52,6 +52,7 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
     { key: 'state', label: 'State' },
     { key: 'status', label: 'Status' },
     { key: 'projectValueCr', label: 'Value' },
+    { key: 'completionPercent', label: 'Completion' },
     { key: 'durationMonths', label: 'Duration' },
     { key: 'startDate', label: 'Start' },
   ];
@@ -93,7 +94,7 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
                 <Link href={`/projects/${p.id}`} className="font-medium text-ink-900 hover:text-brand-700">
                   {p.name}
                 </Link>
-                <p className="mt-0.5 text-xs text-ink-500">{p.sector}</p>
+                <p className="mt-0.5 text-xs text-ink-500">{p.sector} · {p.subSector}</p>
               </td>
               <td className="whitespace-nowrap px-4 py-3 text-ink-600">
                 {p.city}, {p.state}
@@ -102,6 +103,14 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
                 <StatusBadge status={p.status} />
               </td>
               <td className="whitespace-nowrap px-4 py-3 font-medium text-ink-800">{formatCr(p.projectValueCr)}</td>
+              <td className="whitespace-nowrap px-4 py-3">
+                <div className="flex items-center gap-2" title={p.completionBasis === 'disclosed' ? 'Disclosed by source' : p.completionBasis === 'calculated' ? 'Estimated from disclosed timeline' : 'Estimated from project status'}>
+                  <div className="h-1.5 w-14 overflow-hidden rounded-full bg-ink-100">
+                    <div className="h-full rounded-full bg-brand-500" style={{ width: `${p.completionPercent}%` }} />
+                  </div>
+                  <span className="text-xs tabular-nums text-ink-600">{p.completionPercent}%</span>
+                </div>
+              </td>
               <td className="whitespace-nowrap px-4 py-3 text-ink-600">{formatDuration(p.durationMonths)}</td>
               <td className="whitespace-nowrap px-4 py-3 text-ink-600">{formatDate(p.startDate)}</td>
               <td className="whitespace-nowrap px-4 py-3">

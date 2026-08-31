@@ -10,6 +10,7 @@ export default function FilterBar({
   setFilters,
   stateOptions,
   sectorOptions,
+  subSectorOptions,
   ownerOptions,
   statusOptions,
 }: {
@@ -17,6 +18,7 @@ export default function FilterBar({
   setFilters: (f: Filters) => void;
   stateOptions: string[];
   sectorOptions: string[];
+  subSectorOptions: string[];
   ownerOptions: string[];
   statusOptions: string[];
 }) {
@@ -27,6 +29,7 @@ export default function FilterBar({
   const activeCount =
     filters.states.length +
     filters.sectors.length +
+    filters.subSectors.length +
     filters.ownerTypes.length +
     filters.statuses.length +
     (filters.contractor ? 1 : 0) +
@@ -35,7 +38,8 @@ export default function FilterBar({
     (filters.yearTo !== null ? 1 : 0) +
     (filters.minDurationMonths !== null ? 1 : 0) +
     (filters.maxDurationMonths !== null ? 1 : 0) +
-    (filters.minValueCr !== null ? 1 : 0);
+    (filters.minValueCr !== null ? 1 : 0) +
+    (filters.maxValueCr !== null ? 1 : 0);
 
   return (
     <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-sm">
@@ -52,6 +56,7 @@ export default function FilterBar({
         </div>
         <MultiSelect label="State" options={stateOptions} selected={filters.states} onChange={(v) => update('states', v)} />
         <MultiSelect label="Sector" options={sectorOptions} selected={filters.sectors} onChange={(v) => update('sectors', v)} />
+        <MultiSelect label="Sub-Sector" options={subSectorOptions} selected={filters.subSectors} onChange={(v) => update('subSectors', v)} />
         <MultiSelect label="Owner Type" options={ownerOptions} selected={filters.ownerTypes} onChange={(v) => update('ownerTypes', v)} />
         <MultiSelect label="Status" options={statusOptions} selected={filters.statuses} onChange={(v) => update('statuses', v)} />
         {activeCount > 0 && (
@@ -70,7 +75,8 @@ export default function FilterBar({
         <NumberField label="Start year to" value={filters.yearTo} onChange={(v) => update('yearTo', v)} placeholder="e.g. 2026" />
         <NumberField label="Min duration (months)" value={filters.minDurationMonths} onChange={(v) => update('minDurationMonths', v)} placeholder="0" />
         <NumberField label="Max duration (months)" value={filters.maxDurationMonths} onChange={(v) => update('maxDurationMonths', v)} placeholder="60" />
-        <NumberField label="Min project value (₹ Cr)" value={filters.minValueCr} onChange={(v) => update('minValueCr', v)} placeholder="e.g. 500" />
+        <NumberField label="Min project value (₹ Cr)" value={filters.minValueCr} onChange={(v) => update('minValueCr', v)} placeholder="e.g. 0.01" />
+        <NumberField label="Max project value (₹ Cr)" value={filters.maxValueCr} onChange={(v) => update('maxValueCr', v)} placeholder="e.g. 125000" />
       </div>
     </div>
   );
