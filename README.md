@@ -12,14 +12,17 @@ pitch the right contractors, developers and EPC firms.
   type split, top contractors by value, projects-by-year timeline), and a
   "largest opportunities" list. All driven by the same filter bar as `/projects`.
 - **Projects (`/projects`)** — Full sortable, filterable table of every
-  project: state, sector, owner type (Government / PSU / Private / PPP),
-  status, value, duration, contractor. Filter by state, sector, owner type,
-  status, start-year range, duration range, minimum project value, or free-text
-  search. Export the filtered list to CSV.
+  project: state, sector/sub-sector, owner type (Government / PSU / Private /
+  PPP), status, completion %, value, duration, contractor. Filter by state,
+  sector, sub-sector, owner type, status, start-year range, duration range,
+  min/max project value (so you can slice anywhere from sub-crore local works
+  up to mega-projects), or free-text search. Export the filtered list to CSV.
 - **Project detail (`/projects/[id]`)** — Full project record: description,
-  contractor/client, timeline, funding source, estimated steel & cement
-  tonnage, plus your own pitch tracker (status: Not Contacted → Contacted →
-  In Discussion → Quoted → Order Won / Not Interested, with notes).
+  sector/sub-sector, contractor/client, timeline, completion % (with a note
+  on whether it's disclosed, calculated from dates, or a status-based
+  estimate), funding source, estimated steel & cement tonnage, plus your own
+  pitch tracker (status: Not Contacted → Contacted → In Discussion → Quoted →
+  Order Won / Not Interested, with notes).
 - **Contractors (`/contractors`)** — Every contractor/EPC/developer, ranked by
   total project value, with project count, active project count, states
   covered, and combined material demand. Click through to see their projects.
@@ -35,25 +38,41 @@ pitch the right contractors, developers and EPC firms.
 
 ## Seed data
 
-The dashboard ships with **316 real, individually-sourced projects** across 29
-states/UTs and **216 unique contractors** — ranging from large national EPC
-firms to small/regional builders (e.g. K.C.V.R Infra Projects, Ramraja
-Construction, Brahmaputra Infrastructure, EMS Limited, Dineshchandra R
-Agrawal Infracon, Hardayal Constructions) that are often better sales leads
-than the big names since they have less negotiating leverage with material
-suppliers. Coverage spans government (NHAI, state PWD/road corporations,
-NHIDCL, PIB-announced projects across the Northeast and J&K/Ladakh), PSU
-(RVNL, NTPC/BHEL, POWERGRID, SAIL, metro rail corporations, NHSRCL,
-state industrial corporations like MIDC/GIDC/TSIIC/RIICO/KIADB), private
-(real estate — including tier-2/3 city developers and RERA-filed projects —
-steel/cement/pharma/chemicals/auto industrial capex, renewable energy EPC,
+The dashboard ships with **349 real, individually-sourced projects** across 31
+states/UTs and **220 unique contractors**, with disclosed values spanning
+**₹0.03 Cr (₹3 lakh) to ₹1,25,000 Cr** — from a single village link road or
+panchayat bhawan up to a mega industrial complex — ranging from large
+national EPC firms to small/regional and hyperlocal builders (e.g. K.C.V.R
+Infra Projects, Ramraja Construction, Brahmaputra Infrastructure, EMS
+Limited, Dineshchandra R Agrawal Infracon, Hardayal Constructions, plus
+dozens of local contractors on sub-₹20-Cr rural road, health-centre, and
+panchayat-building works) that are often better sales leads than the big
+names since they have less negotiating leverage with material suppliers.
+Coverage spans government (NHAI, state PWD/road corporations, NHIDCL,
+PIB-announced projects across the Northeast and J&K/Ladakh, district-level
+tenders), PSU (RVNL, NTPC/BHEL, POWERGRID, SAIL, metro rail corporations,
+NHSRCL, state industrial corporations like MIDC/GIDC/TSIIC/RIICO/KIADB),
+private (real estate — including tier-2/3/4 city developers and RERA-filed
+projects — steel/cement/pharma/chemicals/auto industrial capex, SME-listed
+company capex disclosed on stock exchange filings, renewable energy EPC,
 data centers, warehousing/MMLPs, healthcare, education) and PPP projects,
 including national flagship programs (Mumbai-Ahmedabad bullet train, Char
 Dham Pariyojana, Sagarmala/Vadhavan Port) and major dam/irrigation projects.
 Each was compiled from public announcements (company disclosures, exchange
-filings, NHAI/metro-rail-corporation press releases, PIB releases, trade
-press) as of August 2026, and every record carries a `sourceUrl` — click
-**View source** on a project's detail page to verify it before you pitch.
+filings, NHAI/metro-rail-corporation press releases, PIB releases, local
+news, trade press) as of August 2026, and every record carries a `sourceUrl`
+— click **View source** on a project's detail page to verify it before you
+pitch.
+
+Every project also carries a **segment/sub-segment** (`sector`/`subSector` —
+e.g. Industrial & Economic Corridors → Steel, Cement, Auto & EV, Chemicals &
+Petrochemicals, etc.; auto-classified from each project's real description,
+not fabricated) and a **completion %**, computed from disclosed start/end
+dates where available and otherwise a rough estimate from status (Tendering
+= 0%, Awarded = 5%, Under Construction ≈ 45%, Nearing Completion ≈ 85%,
+Completed = 100%) — the UI always shows which basis applies (disclosed /
+calculated / status-estimate) so an estimate is never mistaken for a
+measured fact.
 
 This is **not a live feed and not exhaustive** — it's a snapshot from
 several research passes, not a comprehensive database of every Indian
