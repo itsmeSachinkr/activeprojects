@@ -97,7 +97,7 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
                 <p className="mt-0.5 text-xs text-ink-500">{p.sector} · {p.subSector}</p>
               </td>
               <td className="whitespace-nowrap px-4 py-3 text-ink-600">
-                {p.city}, {p.state}
+                {p.city ? `${p.city}, ` : ''}{p.state}
               </td>
               <td className="whitespace-nowrap px-4 py-3">
                 <StatusBadge status={p.status} />

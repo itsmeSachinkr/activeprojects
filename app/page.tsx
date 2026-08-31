@@ -100,7 +100,7 @@ export default function DashboardPage() {
                 <div>
                   <p className="text-sm font-medium text-ink-900">{p.name}</p>
                   <p className="flex items-center gap-1 text-xs text-ink-500">
-                    <MapPin size={11} /> {p.city}, {p.state} · {p.contractor ?? 'Not yet awarded'}
+                    <MapPin size={11} /> {p.city ? `${p.city}, ` : ''}{p.state} · {p.contractor ?? 'Not yet awarded'}
                   </p>
                 </div>
                 <p className="whitespace-nowrap text-sm font-semibold text-ink-800">{formatCr(p.projectValueCr)}</p>
