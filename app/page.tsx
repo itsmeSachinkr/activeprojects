@@ -6,7 +6,7 @@ import { useProjects } from '@/lib/useProjects';
 import { EMPTY_FILTERS, applyFilters } from '@/lib/filters';
 import type { Filters } from '@/lib/filters';
 import { uniqueSorted, totalValueCr, totalSteelTonnes, totalCementTonnes, formatCr, formatTonnes, countWithDisclosedValue } from '@/lib/utils';
-import { SECTORS, STATUSES, OWNER_TYPES } from '@/lib/types';
+import { SECTORS, STATUSES, OWNER_TYPES, SEGMENTS_C } from '@/lib/types';
 import FilterBar from '@/components/FilterBar';
 import StatCard from '@/components/StatCard';
 import { StateBarChart, SectorBarChart, OwnerPieChart, TopContractorsChart, TimelineChart } from '@/components/DashboardCharts';
@@ -61,6 +61,7 @@ export default function DashboardPage() {
         stateOptions={stateOptions}
         sectorOptions={SECTORS}
         subSectorOptions={subSectorOptions}
+        segmentOptions={SEGMENTS_C}
         ownerOptions={OWNER_TYPES}
         statusOptions={STATUSES}
       />

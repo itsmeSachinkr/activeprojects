@@ -42,3 +42,7 @@ export function OwnerBadge({ ownerType }: { ownerType: string }) {
 export function PitchBadge({ pitchStatus }: { pitchStatus: string }) {
   return <Pill text={pitchStatus} className={PITCH_COLORS[pitchStatus] ?? 'bg-ink-100 text-ink-700'} />;
 }
+
+export function SegmentBadge({ segment }: { segment: string }) {
+  return <Pill text={segment} className="bg-violet-100 text-violet-800" />;
+}

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import type { Project } from '@/lib/types';
 import { formatCr, formatDate, formatDuration } from '@/lib/utils';
-import { StatusBadge, OwnerBadge, PitchBadge } from './Badge';
+import { StatusBadge, OwnerBadge, PitchBadge, SegmentBadge } from './Badge';
 import { ArrowUpDown } from 'lucide-react';
 
 type SortKey = 'name' | 'state' | 'projectValueCr' | 'durationMonths' | 'startDate' | 'status' | 'completionPercent';
@@ -82,6 +82,7 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
                 </span>
               </th>
             ))}
+            <th className="whitespace-nowrap px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-500">Segment</th>
             <th className="whitespace-nowrap px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-500">Owner</th>
             <th className="whitespace-nowrap px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-500">Contractor</th>
             <th className="whitespace-nowrap px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-500">Pitch</th>
@@ -113,6 +114,9 @@ export default function ProjectTable({ projects }: { projects: Project[] }) {
               </td>
               <td className="whitespace-nowrap px-4 py-3 text-ink-600">{formatDuration(p.durationMonths)}</td>
               <td className="whitespace-nowrap px-4 py-3 text-ink-600">{formatDate(p.startDate)}</td>
+              <td className="whitespace-nowrap px-4 py-3">
+                <SegmentBadge segment={p.segmentC} />
+              </td>
               <td className="whitespace-nowrap px-4 py-3">
                 <OwnerBadge ownerType={p.ownerType} />
               </td>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readProjects, writeProjects, nextProjectId } from '@/lib/data';
-import type { Project, ProjectStatus } from '@/lib/types';
+import type { Project, ProjectStatus, Sector } from '@/lib/types';
 
 export async function GET() {
   const projects = readProjects();
@@ -15,6 +15,25 @@ const STATUS_COMPLETION_BAND: Record<ProjectStatus, number> = {
   Delayed: 55,
   'Nearing Completion': 85,
   Completed: 100,
+};
+
+// Coarse sector -> Segment__c default for imported rows that don't specify a segment.
+// This is a fallback only; edit the record afterward for a precise classification.
+const SECTOR_TO_SEGMENT_C: Record<Sector, string> = {
+  'Roads & Highways': 'Infra - Transport',
+  Bridges: 'Infra - Transport',
+  'Metro & Rail': 'Infra - Transport',
+  'Ports & Airports': 'Infra - Transport',
+  'Water & Irrigation': 'Infra - Water',
+  'Smart City': 'Infra - Public',
+  'Housing & Urban Development': 'Infra - Public',
+  'Power & Energy': 'Infra - Public',
+  Healthcare: 'Infra - Public',
+  'Industrial & Economic Corridors': 'Industrial and Machinery',
+  'Data Centers': 'Industrial and Machinery',
+  'Residential Real Estate': 'Buildings - Residential',
+  'Warehousing & Logistics': 'Buildings - Industrial',
+  'Commercial & Institutional Buildings': 'Buildings - Commercial',
 };
 
 // Bulk import: accepts an array of partial project records (e.g. from CSV import).
@@ -46,6 +65,7 @@ export async function POST(req: NextRequest) {
         description: record.description ?? '',
         sector: record.sector ?? 'Roads & Highways',
         subSector: record.subSector ?? 'General',
+        segmentC: (record.segmentC as Project['segmentC']) ?? (SECTOR_TO_SEGMENT_C[record.sector ?? 'Roads & Highways'] as Project['segmentC']),
         ownerType: record.ownerType ?? 'Government',
         state: record.state ?? '',
         city: record.city ?? '',

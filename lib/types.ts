@@ -36,12 +36,27 @@ export type PitchStatus =
 
 export type CompletionBasis = 'calculated' | 'status' | 'disclosed';
 
+// Top-level customer/demand segment classification (aligned to the sales team's
+// Segment__c picklist), independent of and cross-cutting the sector/subSector taxonomy.
+export type SegmentC =
+  | 'Retail'
+  | 'Processors'
+  | 'Infra - Water'
+  | 'Infra - Transport'
+  | 'Infra - Public'
+  | 'Industrial and Machinery'
+  | 'Buildings - Residential'
+  | 'Buildings - Industrial'
+  | 'Buildings - HVAC'
+  | 'Buildings - Commercial';
+
 export interface Project {
   id: string;
   name: string;
   description: string;
   sector: Sector;
   subSector: string;
+  segmentC: SegmentC;
   ownerType: OwnerType;
   state: string;
   city: string;
@@ -85,6 +100,19 @@ export const SECTORS: Sector[] = [
 ];
 
 export const OWNER_TYPES: OwnerType[] = ['Government', 'PSU', 'Private', 'PPP'];
+
+export const SEGMENTS_C: SegmentC[] = [
+  'Retail',
+  'Processors',
+  'Infra - Water',
+  'Infra - Transport',
+  'Infra - Public',
+  'Industrial and Machinery',
+  'Buildings - Residential',
+  'Buildings - Industrial',
+  'Buildings - HVAC',
+  'Buildings - Commercial',
+];
 
 export const STATUSES: ProjectStatus[] = [
   'Tendering',

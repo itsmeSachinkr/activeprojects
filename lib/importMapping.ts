@@ -1,4 +1,4 @@
-import { SECTORS, STATUSES, OWNER_TYPES, FUNDING_SOURCES } from './types';
+import { SECTORS, STATUSES, OWNER_TYPES, FUNDING_SOURCES, SEGMENTS_C } from './types';
 
 export interface SchemaFieldDef {
   key: string;
@@ -12,6 +12,7 @@ export const SCHEMA_FIELDS: SchemaFieldDef[] = [
   { key: 'description', label: 'Description', required: false, synonyms: ['description', 'scope', 'details', 'remarks'] },
   { key: 'sector', label: 'Sector / Segment', required: false, synonyms: ['sector', 'industry', 'category', 'segment'] },
   { key: 'subSector', label: 'Sub-Sector / Sub-Segment', required: false, synonyms: ['sub-sector', 'sub sector', 'sub-segment', 'sub segment', 'industry group', 'sub-industry'] },
+  { key: 'segmentC', label: 'Segment (CRM)', required: false, synonyms: ['segment_c', 'segment__c', 'segment', 'crm segment', 'demand segment'] },
   { key: 'ownerType', label: 'Owner Type', required: false, synonyms: ['owner type', 'ownership', 'client type', 'sector type'] },
   { key: 'state', label: 'State', required: true, synonyms: ['state'] },
   { key: 'city', label: 'City / District', required: false, synonyms: ['city', 'district', 'location', 'place', 'town'] },
@@ -99,14 +100,17 @@ export function applyMapping(
     const ownerType = get('ownerType');
     const status = get('status');
     const fundingSource = get('fundingSource');
+    const segmentC = get('segmentC');
 
     const normSector = sector ? normalizeEnum(sector, SECTORS) : '';
     const normOwner = ownerType ? normalizeEnum(ownerType, OWNER_TYPES) : '';
     const normStatus = status ? normalizeEnum(status, STATUSES) : '';
     const normFunding = fundingSource ? normalizeEnum(fundingSource, FUNDING_SOURCES) : '';
+    const normSegmentC = segmentC ? normalizeEnum(segmentC, SEGMENTS_C) : '';
 
     if (sector && !(SECTORS as readonly string[]).includes(normSector)) warnings.push(`Unrecognized sector "${sector}"`);
     if (status && !(STATUSES as readonly string[]).includes(normStatus)) warnings.push(`Unrecognized status "${status}"`);
+    if (segmentC && !(SEGMENTS_C as readonly string[]).includes(normSegmentC)) warnings.push(`Unrecognized segment "${segmentC}"`);
 
     const valueStr = get('projectValueCr').replace(/[^0-9.]/g, '');
     const durationStr = get('durationMonths').replace(/[^0-9.]/g, '');

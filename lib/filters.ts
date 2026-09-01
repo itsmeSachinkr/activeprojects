@@ -5,6 +5,7 @@ export interface Filters {
   states: string[];
   sectors: string[];
   subSectors: string[];
+  segmentsC: string[];
   ownerTypes: string[];
   statuses: string[];
   contractor: string;
@@ -21,6 +22,7 @@ export const EMPTY_FILTERS: Filters = {
   states: [],
   sectors: [],
   subSectors: [],
+  segmentsC: [],
   ownerTypes: [],
   statuses: [],
   contractor: '',
@@ -38,12 +40,13 @@ export function applyFilters(projects: Project[], filters: Filters): Project[] {
     if (filters.states.length && !filters.states.includes(p.state)) return false;
     if (filters.sectors.length && !filters.sectors.includes(p.sector)) return false;
     if (filters.subSectors.length && !filters.subSectors.includes(p.subSector)) return false;
+    if (filters.segmentsC.length && !filters.segmentsC.includes(p.segmentC)) return false;
     if (filters.ownerTypes.length && !filters.ownerTypes.includes(p.ownerType)) return false;
     if (filters.statuses.length && !filters.statuses.includes(p.status)) return false;
     if (filters.contractor && p.contractor !== filters.contractor) return false;
     if (filters.search) {
       const q = filters.search.toLowerCase();
-      const hay = `${p.name} ${p.contractor} ${p.client} ${p.city} ${p.state} ${p.subSector}`.toLowerCase();
+      const hay = `${p.name} ${p.contractor} ${p.client} ${p.city} ${p.state} ${p.subSector} ${p.segmentC}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     const year = startYear(p);

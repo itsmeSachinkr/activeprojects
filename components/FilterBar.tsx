@@ -11,6 +11,7 @@ export default function FilterBar({
   stateOptions,
   sectorOptions,
   subSectorOptions,
+  segmentOptions,
   ownerOptions,
   statusOptions,
 }: {
@@ -19,6 +20,7 @@ export default function FilterBar({
   stateOptions: string[];
   sectorOptions: string[];
   subSectorOptions: string[];
+  segmentOptions: string[];
   ownerOptions: string[];
   statusOptions: string[];
 }) {
@@ -30,6 +32,7 @@ export default function FilterBar({
     filters.states.length +
     filters.sectors.length +
     filters.subSectors.length +
+    filters.segmentsC.length +
     filters.ownerTypes.length +
     filters.statuses.length +
     (filters.contractor ? 1 : 0) +
@@ -55,6 +58,7 @@ export default function FilterBar({
           />
         </div>
         <MultiSelect label="State" options={stateOptions} selected={filters.states} onChange={(v) => update('states', v)} />
+        <MultiSelect label="Segment" options={segmentOptions} selected={filters.segmentsC} onChange={(v) => update('segmentsC', v)} />
         <MultiSelect label="Sector" options={sectorOptions} selected={filters.sectors} onChange={(v) => update('sectors', v)} />
         <MultiSelect label="Sub-Sector" options={subSectorOptions} selected={filters.subSectors} onChange={(v) => update('subSectors', v)} />
         <MultiSelect label="Owner Type" options={ownerOptions} selected={filters.ownerTypes} onChange={(v) => update('ownerTypes', v)} />

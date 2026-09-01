@@ -6,7 +6,7 @@ import { useProjects } from '@/lib/useProjects';
 import { EMPTY_FILTERS, applyFilters } from '@/lib/filters';
 import type { Filters } from '@/lib/filters';
 import { uniqueSorted, projectsToCsv } from '@/lib/utils';
-import { SECTORS, STATUSES, OWNER_TYPES } from '@/lib/types';
+import { SECTORS, STATUSES, OWNER_TYPES, SEGMENTS_C } from '@/lib/types';
 import FilterBar from '@/components/FilterBar';
 import ProjectTable from '@/components/ProjectTable';
 import { Download, X } from 'lucide-react';
@@ -91,6 +91,7 @@ function ProjectsPageInner() {
         stateOptions={stateOptions}
         sectorOptions={SECTORS}
         subSectorOptions={subSectorOptions}
+        segmentOptions={SEGMENTS_C}
         ownerOptions={OWNER_TYPES}
         statusOptions={STATUSES}
       />

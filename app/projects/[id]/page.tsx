@@ -6,8 +6,8 @@ import Link from 'next/link';
 import type { Project } from '@/lib/types';
 import { PITCH_STATUSES } from '@/lib/types';
 import { formatCr, formatDate, formatTonnes, formatDuration } from '@/lib/utils';
-import { StatusBadge, OwnerBadge, PitchBadge } from '@/components/Badge';
-import { ArrowLeft, Building2, Calendar, MapPin, Landmark, Save, Trash2, ExternalLink } from 'lucide-react';
+import { StatusBadge, OwnerBadge, PitchBadge, SegmentBadge } from '@/components/Badge';
+import { ArrowLeft, Building2, Calendar, MapPin, Landmark, Save, Trash2, ExternalLink, Phone, Mail } from 'lucide-react';
 
 export default function ProjectDetailPage() {
   const params = useParams<{ id: string }>();
@@ -79,6 +79,7 @@ export default function ProjectDetailPage() {
             <div className="mb-2 flex flex-wrap items-center gap-2">
               <StatusBadge status={project.status} />
               <OwnerBadge ownerType={project.ownerType} />
+              <SegmentBadge segment={project.segmentC} />
               <span className="text-xs text-ink-500">{project.sector} · {project.subSector}</span>
             </div>
             <h1 className="text-xl font-bold text-ink-900">{project.name}</h1>
@@ -135,6 +136,26 @@ export default function ProjectDetailPage() {
         <p className="mt-2 text-[11px] text-ink-400">
           Material requirements aren&apos;t disclosed in public sources for most projects — estimate from project scope and confirm with the contractor before quoting.
         </p>
+
+        {(project.contactPerson || project.contactPhone || project.contactEmail) && (
+          <div className="mt-5 grid grid-cols-1 gap-4 rounded-lg border border-brand-100 bg-brand-50/40 p-4 sm:grid-cols-3">
+            {project.contactPerson && <Info icon={Building2} label="Contact Person" value={project.contactPerson} />}
+            {project.contactPhone && (
+              <Info
+                icon={Phone}
+                label="Contact Phone"
+                value={<a href={`tel:${project.contactPhone}`} className="hover:underline">{project.contactPhone}</a>}
+              />
+            )}
+            {project.contactEmail && (
+              <Info
+                icon={Mail}
+                label="Contact Email"
+                value={<a href={`mailto:${project.contactEmail}`} className="hover:underline">{project.contactEmail}</a>}
+              />
+            )}
+          </div>
+        )}
       </div>
 
       <div className="rounded-xl border border-ink-200 bg-white p-5 shadow-sm">
@@ -198,7 +219,7 @@ function Info({
 }: {
   icon: React.ComponentType<{ size?: number }>;
   label: string;
-  value: string;
+  value: React.ReactNode;
   sub?: string;
 }) {
   return (
