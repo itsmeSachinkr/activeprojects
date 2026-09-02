@@ -40,8 +40,8 @@ pitch the right contractors, developers and EPC firms.
 
 ## Seed data
 
-The dashboard ships with **384 real, individually-sourced projects** across 31
-states/UTs and **222 unique contractors**, with disclosed values spanning
+The dashboard ships with **411 real, individually-sourced projects** across 31
+states/UTs and **236 unique contractors**, with disclosed values spanning
 **₹0.03 Cr (₹3 lakh) to ₹1,25,000 Cr** — from a single village link road or
 panchayat bhawan up to a mega industrial complex — ranging from large
 national EPC firms to small/regional and hyperlocal builders (e.g. K.C.V.R
