@@ -40,8 +40,8 @@ pitch the right contractors, developers and EPC firms.
 
 ## Seed data
 
-The dashboard ships with **411 real, individually-sourced projects** across 31
-states/UTs and **236 unique contractors**, with disclosed values spanning
+The dashboard ships with **461 real, individually-sourced projects** across 31
+states/UTs and **280 unique contractors**, with disclosed values spanning
 **₹0.03 Cr (₹3 lakh) to ₹1,25,000 Cr** — from a single village link road or
 panchayat bhawan up to a mega industrial complex — ranging from large
 national EPC firms to small/regional and hyperlocal builders (e.g. K.C.V.R
@@ -86,8 +86,20 @@ Every project also carries:
   / status-estimate) so an estimate is never mistaken for a measured fact.
 - **Contact phone/email** for the contractor, where a real, publicly listed
   company contact (official website, investor-relations page) could be
-  verified — currently populated for 20 of the largest contractors. Never a
-  scraped personal number, and never fabricated when nothing public exists.
+  verified — currently populated for ~80 project records. Never a scraped
+  personal number, and never fabricated when nothing public exists.
+- **Contractor office address and project site address**, for ~45-50 mostly
+  residential-real-estate projects, sourced primarily from state RERA
+  (Real Estate Regulatory Authority) project registrations — RERA filings
+  legally require a promoter's registered office address and the project
+  site address, making it the best available source for both. Caveat: this
+  environment's network egress proxy blocked direct fetching of RERA
+  government portals themselves, so these addresses were reconstructed from
+  web-search result snippets that index/quote those portal pages, not from
+  a directly-opened and read source page. A couple of ambiguous or
+  seemingly-garbled matches were deliberately left blank rather than risk a
+  wrong address — but treat every address here as needing a quick
+  independent RERA-portal check before you rely on it for outreach.
 
 This is **not a live feed and not exhaustive** — it's a snapshot from
 several research passes, not a comprehensive database of every Indian
