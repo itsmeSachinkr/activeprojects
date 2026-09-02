@@ -93,7 +93,7 @@ export function projectsToCsv(projects: Project[]): string {
     'id', 'name', 'sector', 'subSector', 'segmentC', 'ownerType', 'state', 'city', 'contractor', 'client',
     'projectValueCr', 'steelRequirementTonnes', 'cementRequirementTonnes',
     'startDate', 'endDate', 'durationMonths', 'status', 'completionPercent', 'completionBasis', 'fundingSource',
-    'tenderDate', 'contactPerson', 'contactPhone', 'contactEmail', 'pitchStatus', 'notes',
+    'tenderDate', 'contactPerson', 'contactPhone', 'contactEmail', 'officeAddress', 'siteAddress', 'pitchStatus', 'notes',
   ];
   const escape = (val: unknown) => {
     const s = val === null || val === undefined ? '' : String(val);

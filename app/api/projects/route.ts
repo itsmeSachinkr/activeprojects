@@ -87,6 +87,8 @@ export async function POST(req: NextRequest) {
         contactPerson: record.contactPerson ?? null,
         contactPhone: record.contactPhone ?? null,
         contactEmail: record.contactEmail ?? null,
+        officeAddress: record.officeAddress ?? null,
+        siteAddress: record.siteAddress ?? null,
         sourceUrl: record.sourceUrl ?? null,
         pitchStatus: record.pitchStatus ?? 'Not Contacted',
         notes: record.notes ?? '',

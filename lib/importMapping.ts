@@ -30,6 +30,8 @@ export const SCHEMA_FIELDS: SchemaFieldDef[] = [
   { key: 'contactPerson', label: 'Contact Person', required: false, synonyms: ['contact person', 'contact name', 'contact'] },
   { key: 'contactPhone', label: 'Contact Phone', required: false, synonyms: ['phone', 'mobile', 'contact no', 'contact number'] },
   { key: 'contactEmail', label: 'Contact Email', required: false, synonyms: ['email', 'e-mail'] },
+  { key: 'officeAddress', label: 'Office Address', required: false, synonyms: ['office address', 'registered office', 'corporate office', 'head office address'] },
+  { key: 'siteAddress', label: 'Site Address', required: false, synonyms: ['site address', 'project address', 'project location', 'plot address'] },
 ];
 
 export function guessMapping(headers: string[]): Record<string, string | null> {
@@ -139,6 +141,8 @@ export function applyMapping(
         contactPerson: get('contactPerson') || null,
         contactPhone: get('contactPhone') || null,
         contactEmail: get('contactEmail') || null,
+        officeAddress: get('officeAddress') || null,
+        siteAddress: get('siteAddress') || null,
         sourceUrl: get('sourceUrl') || null,
       },
       warnings,

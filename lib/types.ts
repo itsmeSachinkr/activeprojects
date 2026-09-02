@@ -76,6 +76,8 @@ export interface Project {
   contactPerson: string | null;
   contactPhone: string | null;
   contactEmail: string | null;
+  officeAddress: string | null;
+  siteAddress: string | null;
   sourceUrl: string | null;
   pitchStatus: PitchStatus;
   notes: string;

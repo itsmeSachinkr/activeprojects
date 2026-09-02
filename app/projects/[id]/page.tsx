@@ -137,7 +137,7 @@ export default function ProjectDetailPage() {
           Material requirements aren&apos;t disclosed in public sources for most projects — estimate from project scope and confirm with the contractor before quoting.
         </p>
 
-        {(project.contactPerson || project.contactPhone || project.contactEmail) && (
+        {(project.contactPerson || project.contactPhone || project.contactEmail || project.officeAddress || project.siteAddress) && (
           <div className="mt-5 grid grid-cols-1 gap-4 rounded-lg border border-brand-100 bg-brand-50/40 p-4 sm:grid-cols-3">
             {project.contactPerson && <Info icon={Building2} label="Contact Person" value={project.contactPerson} />}
             {project.contactPhone && (
@@ -153,6 +153,16 @@ export default function ProjectDetailPage() {
                 label="Contact Email"
                 value={<a href={`mailto:${project.contactEmail}`} className="hover:underline">{project.contactEmail}</a>}
               />
+            )}
+            {project.officeAddress && (
+              <div className="sm:col-span-3">
+                <Info icon={Building2} label="Contractor Office Address" value={project.officeAddress} />
+              </div>
+            )}
+            {project.siteAddress && (
+              <div className="sm:col-span-3">
+                <Info icon={MapPin} label="Project Site Address" value={project.siteAddress} />
+              </div>
             )}
           </div>
         )}
