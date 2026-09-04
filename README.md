@@ -40,10 +40,10 @@ pitch the right contractors, developers and EPC firms.
 
 ## Seed data
 
-The dashboard ships with **461 real, individually-sourced projects** across 31
-states/UTs and **280 unique contractors**, with disclosed values spanning
-**₹0.03 Cr (₹3 lakh) to ₹1,25,000 Cr** — from a single village link road or
-panchayat bhawan up to a mega industrial complex — ranging from large
+The dashboard ships with **3,480 real, individually-sourced projects** across
+**39 states/UTs** and **1,276 unique contractors**, with disclosed values
+spanning **₹0.03 Cr (₹3 lakh) to ₹1,30,000 Cr** — from a single village link
+road or panchayat bhawan up to a mega industrial complex — ranging from large
 national EPC firms to small/regional and hyperlocal builders (e.g. K.C.V.R
 Infra Projects, Ramraja Construction, Brahmaputra Infrastructure, EMS
 Limited, Dineshchandra R Agrawal Infracon, Hardayal Constructions, plus
@@ -64,8 +64,20 @@ programs (Mumbai-Ahmedabad bullet train, Char Dham Pariyojana,
 Sagarmala/Vadhavan Port) and major dam/irrigation projects. Each was
 compiled from public announcements (company disclosures, exchange filings,
 NHAI/metro-rail-corporation press releases, PIB releases, local news, trade
-press) as of August 2026, and every record carries a `sourceUrl` — click
-**View source** on a project's detail page to verify it before you pitch.
+press) as of August 2026, and every publicly-sourced record carries a
+`sourceUrl` — click **View source** on a project's detail page to verify it
+before you pitch.
+
+**~3,020 of these projects** come from a real internal GTM (go-to-market)
+project-accounts export (a CSV tracker of project leads, not a public
+website), rather than a public article — those records have no `sourceUrl`
+(there's no public page to link to) and instead say so plainly in the
+description ("Source: internal GTM project account data (not a public URL).")
+so it's never mistaken for a verifiable public source. This is also where
+most of the dataset's office/site addresses, contact names, and disclosed
+completion percentages come from (see below) — the export includes
+promoter/developer registered-office details and a project completion-stage
+field for a large share of its rows.
 
 Every project also carries:
 - A **segment** (`segmentC`) aligned to the sales team's CRM segment
@@ -79,27 +91,29 @@ Every project also carries:
   Processors and Buildings - HVAC initially had zero), that was reported
   honestly and closed by sourcing real ones rather than force-fitting
   unrelated projects into the bucket.
-- A **completion %**, computed from disclosed start/end dates where
-  available and otherwise a rough estimate from status (Tendering = 0%,
-  Awarded = 5%, Under Construction ≈ 45%, Nearing Completion ≈ 85%, Completed
-  = 100%) — the UI always shows which basis applies (disclosed / calculated
-  / status-estimate) so an estimate is never mistaken for a measured fact.
-- **Contact phone/email** for the contractor, where a real, publicly listed
-  company contact (official website, investor-relations page) could be
-  verified — currently populated for ~80 project records. Never a scraped
-  personal number, and never fabricated when nothing public exists.
-- **Contractor office address and project site address**, for ~45-50 mostly
-  residential-real-estate projects, sourced primarily from state RERA
-  (Real Estate Regulatory Authority) project registrations — RERA filings
-  legally require a promoter's registered office address and the project
-  site address, making it the best available source for both. Caveat: this
-  environment's network egress proxy blocked direct fetching of RERA
-  government portals themselves, so these addresses were reconstructed from
-  web-search result snippets that index/quote those portal pages, not from
-  a directly-opened and read source page. A couple of ambiguous or
-  seemingly-garbled matches were deliberately left blank rather than risk a
-  wrong address — but treat every address here as needing a quick
-  independent RERA-portal check before you rely on it for outreach.
+- A **completion %**, with a disclosed value where the source states one
+  (the GTM export's own project completion-stage field, ~2,800 records),
+  otherwise computed from disclosed start/end dates, and failing that a
+  rough estimate from status (Tendering = 0%, Awarded = 5%, Under
+  Construction ≈ 45%, Nearing Completion ≈ 85%, Completed = 100%) — the UI
+  always shows which basis applies (disclosed / calculated / status-estimate)
+  so an estimate is never mistaken for a measured fact.
+- **Contact person/phone/email** — populated for **2,050 project records**:
+  ~2,000 from the internal GTM export's own promoter/contractor contact
+  fields, plus a smaller set matched against ~20 major national contractors'
+  publicly-listed contacts (official website / investor-relations page).
+  Never a scraped personal number, and never fabricated when nothing is
+  disclosed.
+- **Contractor office address and project site address** — populated for
+  **3,063 / 3,070 project records** respectively, mostly from the internal
+  GTM export's own promoter registered-office and project-location fields,
+  supplemented by a smaller RERA (Real Estate Regulatory Authority)-sourced
+  batch for public real-estate projects. Caveat on the RERA-sourced subset:
+  this environment's network egress proxy blocked direct fetching of RERA
+  government portals themselves, so those specific addresses were
+  reconstructed from web-search result snippets rather than a
+  directly-opened source page — treat that subset as needing a quick
+  independent check before relying on it for outreach.
 
 This is **not a live feed and not exhaustive** — it's a snapshot from
 several research passes, not a comprehensive database of every Indian
