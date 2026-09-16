@@ -13,11 +13,22 @@ pitch the right contractors, developers and EPC firms.
   "largest opportunities" list. All driven by the same filter bar as `/projects`.
 - **Projects (`/projects`)** — Full sortable, filterable table of every
   project: state, segment/sector/sub-sector, owner type (Government / PSU /
-  Private / PPP), status, completion %, value, duration, contractor. Filter by
-  state, **segment** (see below), sector, sub-sector, owner type, status,
-  start-year range, duration range, min/max project value (so you can slice
-  anywhere from sub-crore local works up to mega-projects), or free-text
-  search. Export the filtered list to CSV.
+  Private / PPP), status, completion %, value, duration, contractor, client.
+  Filter by state, city, **segment** (see below), sector, sub-sector, owner
+  type, status, funding source, pitch status, start-year range, duration
+  range, min/max project value (so you can slice anywhere from sub-crore
+  local works up to mega-projects), min/max completion %, "has contact info"
+  / "has public source link" toggles, or free-text search. Export the
+  filtered list to **CSV or Excel (.xlsx)**. Toggle **Edit mode** to update
+  status, value, contractor, client or pitch status directly in the table —
+  changes save immediately (to the shared `data/projects.json` in the full
+  app; to your browser only in the standalone artifact preview). Add your own
+  **calculated fields** (Tableau-style): name a new column and give it a
+  formula over the numeric fields (`projectValueCr`, `steelRequirementTonnes`,
+  `cementRequirementTonnes`, `durationMonths`, `completionPercent`) — e.g. an
+  estimated steel cost — and it appears as a sortable column included in every
+  export. Calculated field definitions are a personal view preference stored
+  in your browser (`localStorage`), not part of the shared dataset.
 - **Project detail (`/projects/[id]`)** — Full project record: description,
   segment/sector/sub-sector, contractor/client (plus contact phone/email
   where publicly available), timeline, completion % (with a note on whether

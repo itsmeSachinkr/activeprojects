@@ -9,20 +9,26 @@ export default function FilterBar({
   filters,
   setFilters,
   stateOptions,
+  cityOptions,
   sectorOptions,
   subSectorOptions,
   segmentOptions,
   ownerOptions,
   statusOptions,
+  fundingOptions,
+  pitchOptions,
 }: {
   filters: Filters;
   setFilters: (f: Filters) => void;
   stateOptions: string[];
+  cityOptions: string[];
   sectorOptions: string[];
   subSectorOptions: string[];
   segmentOptions: string[];
   ownerOptions: string[];
   statusOptions: string[];
+  fundingOptions: string[];
+  pitchOptions: string[];
 }) {
   function update<K extends keyof Filters>(key: K, value: Filters[K]) {
     setFilters({ ...filters, [key]: value });
@@ -30,11 +36,14 @@ export default function FilterBar({
 
   const activeCount =
     filters.states.length +
+    filters.cities.length +
     filters.sectors.length +
     filters.subSectors.length +
     filters.segmentsC.length +
     filters.ownerTypes.length +
     filters.statuses.length +
+    filters.fundingSources.length +
+    filters.pitchStatuses.length +
     (filters.contractor ? 1 : 0) +
     (filters.search ? 1 : 0) +
     (filters.yearFrom !== null ? 1 : 0) +
@@ -42,7 +51,11 @@ export default function FilterBar({
     (filters.minDurationMonths !== null ? 1 : 0) +
     (filters.maxDurationMonths !== null ? 1 : 0) +
     (filters.minValueCr !== null ? 1 : 0) +
-    (filters.maxValueCr !== null ? 1 : 0);
+    (filters.maxValueCr !== null ? 1 : 0) +
+    (filters.minCompletionPercent !== null ? 1 : 0) +
+    (filters.maxCompletionPercent !== null ? 1 : 0) +
+    (filters.hasContactInfo ? 1 : 0) +
+    (filters.hasSourceUrl ? 1 : 0);
 
   return (
     <div className="rounded-xl border border-ink-200 bg-white p-4 shadow-sm">
@@ -58,11 +71,14 @@ export default function FilterBar({
           />
         </div>
         <MultiSelect label="State" options={stateOptions} selected={filters.states} onChange={(v) => update('states', v)} />
+        <MultiSelect label="City" options={cityOptions} selected={filters.cities} onChange={(v) => update('cities', v)} />
         <MultiSelect label="Segment" options={segmentOptions} selected={filters.segmentsC} onChange={(v) => update('segmentsC', v)} />
         <MultiSelect label="Sector" options={sectorOptions} selected={filters.sectors} onChange={(v) => update('sectors', v)} />
         <MultiSelect label="Sub-Sector" options={subSectorOptions} selected={filters.subSectors} onChange={(v) => update('subSectors', v)} />
         <MultiSelect label="Owner Type" options={ownerOptions} selected={filters.ownerTypes} onChange={(v) => update('ownerTypes', v)} />
         <MultiSelect label="Status" options={statusOptions} selected={filters.statuses} onChange={(v) => update('statuses', v)} />
+        <MultiSelect label="Funding Source" options={fundingOptions} selected={filters.fundingSources} onChange={(v) => update('fundingSources', v)} />
+        <MultiSelect label="Pitch Status" options={pitchOptions} selected={filters.pitchStatuses} onChange={(v) => update('pitchStatuses', v)} />
         {activeCount > 0 && (
           <button
             type="button"
@@ -81,6 +97,29 @@ export default function FilterBar({
         <NumberField label="Max duration (months)" value={filters.maxDurationMonths} onChange={(v) => update('maxDurationMonths', v)} placeholder="60" />
         <NumberField label="Min project value (₹ Cr)" value={filters.minValueCr} onChange={(v) => update('minValueCr', v)} placeholder="e.g. 0.01" />
         <NumberField label="Max project value (₹ Cr)" value={filters.maxValueCr} onChange={(v) => update('maxValueCr', v)} placeholder="e.g. 125000" />
+        <NumberField label="Min completion %" value={filters.minCompletionPercent} onChange={(v) => update('minCompletionPercent', v)} placeholder="0" />
+        <NumberField label="Max completion %" value={filters.maxCompletionPercent} onChange={(v) => update('maxCompletionPercent', v)} placeholder="100" />
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center gap-4">
+        <label className="flex items-center gap-2 text-sm text-ink-700">
+          <input
+            type="checkbox"
+            checked={filters.hasContactInfo}
+            onChange={(e) => update('hasContactInfo', e.target.checked)}
+            className="h-4 w-4 rounded border-ink-300 text-brand-600 focus:ring-brand-400"
+          />
+          Has contact info
+        </label>
+        <label className="flex items-center gap-2 text-sm text-ink-700">
+          <input
+            type="checkbox"
+            checked={filters.hasSourceUrl}
+            onChange={(e) => update('hasSourceUrl', e.target.checked)}
+            className="h-4 w-4 rounded border-ink-300 text-brand-600 focus:ring-brand-400"
+          />
+          Has public source link
+        </label>
       </div>
     </div>
   );

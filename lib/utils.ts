@@ -1,4 +1,6 @@
 import type { Project } from './types';
+import type { CalcField } from './calc';
+import { compileFormula } from './calc';
 
 export function formatCr(value: number | null): string {
   if (value === null || value === undefined) return 'Not disclosed';
@@ -88,13 +90,36 @@ export function summarizeContractors(projects: Project[]): ContractorSummary[] {
   return Array.from(map.values()).sort((a, b) => b.totalValueCr - a.totalValueCr);
 }
 
-export function projectsToCsv(projects: Project[]): string {
-  const headers = [
-    'id', 'name', 'sector', 'subSector', 'segmentC', 'ownerType', 'state', 'city', 'contractor', 'client',
-    'projectValueCr', 'steelRequirementTonnes', 'cementRequirementTonnes',
-    'startDate', 'endDate', 'durationMonths', 'status', 'completionPercent', 'completionBasis', 'fundingSource',
-    'tenderDate', 'contactPerson', 'contactPhone', 'contactEmail', 'officeAddress', 'siteAddress', 'pitchStatus', 'notes',
-  ];
+const BASE_EXPORT_HEADERS = [
+  'id', 'name', 'sector', 'subSector', 'segmentC', 'ownerType', 'state', 'city', 'contractor', 'client',
+  'projectValueCr', 'steelRequirementTonnes', 'cementRequirementTonnes',
+  'startDate', 'endDate', 'durationMonths', 'status', 'completionPercent', 'completionBasis', 'fundingSource',
+  'tenderDate', 'contactPerson', 'contactPhone', 'contactEmail', 'officeAddress', 'siteAddress', 'sourceUrl', 'pitchStatus', 'notes',
+];
+
+// Builds the export header row and per-project value rows, appending one column per
+// calculated field (evaluated live from its formula) after the base project fields.
+export function projectsToRows(projects: Project[], calcFields: CalcField[] = []): { headers: string[]; rows: unknown[][] } {
+  const compiled = calcFields.map((f) => ({ name: f.name, fn: compileFormula(f.formula) }));
+  const headers = [...BASE_EXPORT_HEADERS, ...compiled.map((c) => c.name)];
+  const rows = projects.map((p) => {
+    const base = BASE_EXPORT_HEADERS.map((h) => (p as unknown as Record<string, unknown>)[h] ?? '');
+    const calc = compiled.map((c) => {
+      let value: number | null;
+      try {
+        value = c.fn(p);
+      } catch {
+        value = null;
+      }
+      return value ?? '';
+    });
+    return [...base, ...calc];
+  });
+  return { headers, rows };
+}
+
+export function projectsToCsv(projects: Project[], calcFields: CalcField[] = []): string {
+  const { headers, rows } = projectsToRows(projects, calcFields);
   const escape = (val: unknown) => {
     const s = val === null || val === undefined ? '' : String(val);
     if (s.includes(',') || s.includes('"') || s.includes('\n')) {
@@ -102,6 +127,6 @@ export function projectsToCsv(projects: Project[]): string {
     }
     return s;
   };
-  const rows = projects.map((p) => headers.map((h) => escape((p as unknown as Record<string, unknown>)[h])).join(','));
-  return [headers.join(','), ...rows].join('\n');
+  const lines = rows.map((row) => row.map(escape).join(','));
+  return [headers.join(','), ...lines].join('\n');
 }

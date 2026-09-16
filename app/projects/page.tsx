@@ -6,10 +6,15 @@ import { useProjects } from '@/lib/useProjects';
 import { EMPTY_FILTERS, applyFilters } from '@/lib/filters';
 import type { Filters } from '@/lib/filters';
 import { uniqueSorted, projectsToCsv } from '@/lib/utils';
-import { SECTORS, STATUSES, OWNER_TYPES, SEGMENTS_C } from '@/lib/types';
+import { downloadProjectsAsXlsx } from '@/lib/exportXlsx';
+import { loadCalcFields, saveCalcFields } from '@/lib/calc';
+import type { CalcField } from '@/lib/calc';
+import { SECTORS, STATUSES, OWNER_TYPES, SEGMENTS_C, FUNDING_SOURCES, PITCH_STATUSES } from '@/lib/types';
+import type { Project } from '@/lib/types';
 import FilterBar from '@/components/FilterBar';
 import ProjectTable from '@/components/ProjectTable';
-import { Download, X } from 'lucide-react';
+import CalcFieldsPanel from '@/components/CalcFieldsPanel';
+import { Download, FileSpreadsheet, X } from 'lucide-react';
 
 export default function ProjectsPage() {
   return (
@@ -20,9 +25,21 @@ export default function ProjectsPage() {
 }
 
 function ProjectsPageInner() {
-  const { projects, error } = useProjects();
+  const { projects, error, updateProject } = useProjects();
   const searchParams = useSearchParams();
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
+  const [calcFields, setCalcFieldsState] = useState<CalcField[]>([]);
+  const [editable, setEditable] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCalcFieldsState(loadCalcFields());
+  }, []);
+
+  function setCalcFields(fields: CalcField[]) {
+    setCalcFieldsState(fields);
+    saveCalcFields(fields);
+  }
 
   useEffect(() => {
     const contractor = searchParams.get('contractor');
@@ -32,11 +49,12 @@ function ProjectsPageInner() {
   }, [searchParams]);
 
   const stateOptions = useMemo(() => uniqueSorted((projects ?? []).map((p) => p.state)), [projects]);
+  const cityOptions = useMemo(() => uniqueSorted((projects ?? []).map((p) => p.city).filter(Boolean)), [projects]);
   const subSectorOptions = useMemo(() => uniqueSorted((projects ?? []).map((p) => p.subSector)), [projects]);
   const filtered = useMemo(() => applyFilters(projects ?? [], filters), [projects, filters]);
 
   function exportCsv() {
-    const csv = projectsToCsv(filtered);
+    const csv = projectsToCsv(filtered, calcFields);
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -44,6 +62,19 @@ function ProjectsPageInner() {
     a.download = `projects-export-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  async function exportExcel() {
+    await downloadProjectsAsXlsx(filtered, calcFields);
+  }
+
+  async function handleUpdate(id: string, patch: Partial<Project>) {
+    try {
+      await updateProject(id, patch);
+      setSaveError(null);
+    } catch (e) {
+      setSaveError(e instanceof Error ? e.message : 'Failed to save changes');
+    }
   }
 
   if (error) {
@@ -63,14 +94,27 @@ function ProjectsPageInner() {
             {filtered.length} of {projects.length} projects match your filters.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={exportCsv}
-          className="flex items-center gap-1.5 rounded-md border border-ink-200 bg-white px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-50"
-        >
-          <Download size={14} /> Export CSV
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={exportCsv}
+            className="flex items-center gap-1.5 rounded-md border border-ink-200 bg-white px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-50"
+          >
+            <Download size={14} /> Export CSV
+          </button>
+          <button
+            type="button"
+            onClick={exportExcel}
+            className="flex items-center gap-1.5 rounded-md border border-ink-200 bg-white px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-50"
+          >
+            <FileSpreadsheet size={14} /> Export Excel
+          </button>
+        </div>
       </div>
+
+      {saveError && (
+        <div className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{saveError}</div>
+      )}
 
       {filters.contractor && (
         <div className="flex items-center gap-2 rounded-md bg-brand-50 px-3 py-2 text-sm text-brand-800">
@@ -89,14 +133,25 @@ function ProjectsPageInner() {
         filters={filters}
         setFilters={setFilters}
         stateOptions={stateOptions}
+        cityOptions={cityOptions}
         sectorOptions={SECTORS}
         subSectorOptions={subSectorOptions}
         segmentOptions={SEGMENTS_C}
         ownerOptions={OWNER_TYPES}
         statusOptions={STATUSES}
+        fundingOptions={FUNDING_SOURCES}
+        pitchOptions={PITCH_STATUSES}
       />
 
-      <ProjectTable projects={filtered} />
+      <CalcFieldsPanel calcFields={calcFields} setCalcFields={setCalcFields} />
+
+      <ProjectTable
+        projects={filtered}
+        calcFields={calcFields}
+        editable={editable}
+        onToggleEditable={() => setEditable((v) => !v)}
+        onUpdate={handleUpdate}
+      />
     </div>
   );
 }

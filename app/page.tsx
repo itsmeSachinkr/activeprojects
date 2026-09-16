@@ -6,7 +6,7 @@ import { useProjects } from '@/lib/useProjects';
 import { EMPTY_FILTERS, applyFilters } from '@/lib/filters';
 import type { Filters } from '@/lib/filters';
 import { uniqueSorted, totalValueCr, totalSteelTonnes, totalCementTonnes, formatCr, formatTonnes, countWithDisclosedValue } from '@/lib/utils';
-import { SECTORS, STATUSES, OWNER_TYPES, SEGMENTS_C } from '@/lib/types';
+import { SECTORS, STATUSES, OWNER_TYPES, SEGMENTS_C, FUNDING_SOURCES, PITCH_STATUSES } from '@/lib/types';
 import FilterBar from '@/components/FilterBar';
 import StatCard from '@/components/StatCard';
 import { StateBarChart, SectorBarChart, OwnerPieChart, TopContractorsChart, TimelineChart } from '@/components/DashboardCharts';
@@ -17,6 +17,7 @@ export default function DashboardPage() {
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS);
 
   const stateOptions = useMemo(() => uniqueSorted((projects ?? []).map((p) => p.state)), [projects]);
+  const cityOptions = useMemo(() => uniqueSorted((projects ?? []).map((p) => p.city).filter(Boolean)), [projects]);
   const subSectorOptions = useMemo(() => uniqueSorted((projects ?? []).map((p) => p.subSector)), [projects]);
   const filtered = useMemo(() => applyFilters(projects ?? [], filters), [projects, filters]);
 
@@ -59,11 +60,14 @@ export default function DashboardPage() {
         filters={filters}
         setFilters={setFilters}
         stateOptions={stateOptions}
+        cityOptions={cityOptions}
         sectorOptions={SECTORS}
         subSectorOptions={subSectorOptions}
         segmentOptions={SEGMENTS_C}
         ownerOptions={OWNER_TYPES}
         statusOptions={STATUSES}
+        fundingOptions={FUNDING_SOURCES}
+        pitchOptions={PITCH_STATUSES}
       />
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
