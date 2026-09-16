@@ -40,8 +40,8 @@ pitch the right contractors, developers and EPC firms.
 
 ## Seed data
 
-The dashboard ships with **3,480 real, individually-sourced projects** across
-**39 states/UTs** and **1,276 unique contractors**, with disclosed values
+The dashboard ships with **3,545 real, individually-sourced projects** across
+**40 states/UTs** and **1,280 unique contractors**, with disclosed values
 spanning **₹0.03 Cr (₹3 lakh) to ₹1,30,000 Cr** — from a single village link
 road or panchayat bhawan up to a mega industrial complex — ranging from large
 national EPC firms to small/regional and hyperlocal builders (e.g. K.C.V.R
@@ -78,6 +78,16 @@ most of the dataset's office/site addresses, contact names, and disclosed
 completion percentages come from (see below) — the export includes
 promoter/developer registered-office details and a project completion-stage
 field for a large share of its rows.
+
+A further **65 projects** were added afterward to fill in sectors and
+states/UTs that were thin (Data Centers, Smart City, Housing & Urban
+Development, Bridges, and small states/UTs like Andaman & Nicobar,
+Ladakh, Nagaland, Mizoram, Puducherry and Goa), each individually
+web-sourced with a real `sourceUrl`. While researching that batch, **10
+existing internal-source records** (a couple of Bihar Ganga bridges, the
+Zojila Tunnel, the Dhubri-Phulbari bridge, etc.) turned out to already have
+a real public source available — those were enriched with a `sourceUrl`
+in place rather than added as duplicate rows.
 
 Every project also carries:
 - A **segment** (`segmentC`) aligned to the sales team's CRM segment
